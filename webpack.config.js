@@ -14,7 +14,16 @@ module.exports = {
     loaders: [{
       loader: 'babel-loader',
       test: /\.js$/,
-      exclude: /(node_modules|bower_components)/
+      include: path.join(__dirname, 'app')
+    }, {
+      loaders: ['style-loader', 'css-loader', 'sass-loader'],
+      test: /\.scss$/,
+      include: path.join(__dirname, 'app')
     }]
+  },
+  resolve: {
+    alias: {
+      app: path.join(__dirname, 'app')
+    }
   }
 };
