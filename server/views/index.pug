@@ -2,7 +2,16 @@ doctype html
 html
   head
     title This is a title
+    style.
+      * {
+        box-sizing: border-box;
+      }
+
+      html, body {
+        margin: 0;
+        padding: 0;
+        font-family: arial, sans-serif;
+      }
   body
-    pre= body
-    #main
+    #main!= body
     script(src="/static/application.js")

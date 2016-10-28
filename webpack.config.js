@@ -9,7 +9,7 @@ module.exports = {
   output: {
     filename: '[name].js',
     publicPath: 'scripts',
-    path: 'static'
+    path: path.join('server','static')
   },
   module: {
     loaders: [{

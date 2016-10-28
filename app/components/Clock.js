@@ -1,7 +1,11 @@
 import React, {createClass} from 'react';
 import moment from 'moment';
 
-// import 'app/styles/clock.scss';
+const styles = {
+  margin: '10px auto',
+  height: '500px',
+  width: '500px'
+};
 
 const Clock = createClass({
   componentWillUnmount() {
@@ -52,7 +56,7 @@ const Clock = createClass({
     const hoursPath = this.handPath(now.hours()*60 + now.minutes(), {outerLength: 150, increments: 720})
     const ticks = this.tickPaths();
     return(
-      <div className="clock">
+      <div style={styles}>
         <svg height="500" width="500">
           {ticks.map((tick) => {
             return(<path key={tick} d={tick} stroke="black" strokeWidth="2"></path>)
