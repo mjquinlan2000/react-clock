@@ -28,7 +28,9 @@ const Clock = createClass({
     const increments = opts.increments || 60;
     const angle = -2*Math.PI*amount/increments - Math.PI;
     const {x, y} = this.circlePoint(angle, radius);
-    return `M 250 ${250 - radius} A 125 125 0 1 0 ${x} ${y}`;
+    const largeArc = -angle > 2*Math.PI && 1 || 0
+
+    return `M 250 ${250 - radius} A ${radius} ${radius} 0 ${largeArc} 1 ${x} ${y}`;
   },
   tickPaths() {
     let paths = [];
@@ -45,7 +47,7 @@ const Clock = createClass({
   },
   render() {
     const now = moment();
-    const secondsPath = this.handPath(now.seconds(), {innerLength: 100})
+    const secondsPath = this.handArc(now.seconds(), 225, {innerLength: 100})
     const minutesPath = this.handPath(now.minutes(), {outerLength: 200})
     const hoursPath = this.handPath(now.hours()*60 + now.minutes(), {outerLength: 150, increments: 720})
     const ticks = this.tickPaths();
@@ -57,7 +59,7 @@ const Clock = createClass({
           })}
           <path className="hand" d={hoursPath} stroke="black" strokeWidth="10" strokeLinecap="round"/>
           <path className="hand" d={minutesPath} stroke="black" strokeWidth="4" strokeLinecap="round"/>
-          <path className="hand" d={secondsPath} stroke="red" strokeWidth="2" strokeLinecap="round"/>
+          <path className="hand" d={secondsPath} stroke="red" strokeWidth="10" strokeLinecap="round" fill="none"/>
           <circle cx="250" cy="250" r="240" stroke="black" strokeWidth="2" fill="none"/>
           <circle cx="250" cy="250" r="10" fill="black"/>
         </svg>
