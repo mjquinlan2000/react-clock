@@ -48,8 +48,8 @@ const Clock = createClass({
   render() {
     const now = moment();
     const secondsPath = this.handArc(now.seconds(), 225, {innerLength: 100})
-    const minutesPath = this.handPath(now.minutes(), {outerLength: 200})
-    const hoursPath = this.handPath(now.hours()*60 + now.minutes(), {outerLength: 150, increments: 720})
+    const minutesPath = this.handArc(now.minutes(), 200, {outerLength: 200})
+    const hoursPath = this.handArc(now.hours()*60 + now.minutes(), 150, {outerLength: 150, increments: 720})
     const ticks = this.tickPaths();
     return(
       <div className="clock">
@@ -57,8 +57,8 @@ const Clock = createClass({
           {ticks.map((tick) => {
             return(<path key={tick} d={tick} stroke="black" strokeWidth="2"></path>)
           })}
-          <path className="hand" d={hoursPath} stroke="black" strokeWidth="10" strokeLinecap="round"/>
-          <path className="hand" d={minutesPath} stroke="black" strokeWidth="4" strokeLinecap="round"/>
+          <path className="hand" d={hoursPath} stroke="black" strokeWidth="40" strokeLinecap="round" fill="none"/>
+          <path className="hand" d={minutesPath} stroke="black" strokeWidth="25" strokeLinecap="round" fill="none"/>
           <path className="hand" d={secondsPath} stroke="red" strokeWidth="10" strokeLinecap="round" fill="none"/>
           <circle cx="250" cy="250" r="240" stroke="black" strokeWidth="2" fill="none"/>
           <circle cx="250" cy="250" r="10" fill="black"/>
