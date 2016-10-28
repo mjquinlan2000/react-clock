@@ -1,7 +1,7 @@
 import React, {createClass} from 'react';
 import moment from 'moment';
 
-import 'app/styles/clock.scss';
+// import 'app/styles/clock.scss';
 
 const Clock = createClass({
   componentWillUnmount() {

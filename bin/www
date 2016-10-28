@@ -1,0 +1,14 @@
+require('babel-core/register');
+var path = require('path');
+require('app-module-path').addPath(path.join(__dirname, '..'));
+var app = require('../server/index').default,
+  http = require('http');
+
+
+app.set('port', 8080);
+
+const server = http.createServer(app);
+
+server.listen(8080, function() {
+  console.log("listening on 8080");
+});
