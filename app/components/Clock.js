@@ -1,24 +1,34 @@
 import React, {createClass} from 'react';
 import moment from 'moment';
 
-const styles = {
+const clockStyles = {
   margin: '10px auto',
   height: '500px',
   width: '500px'
 };
 
-const Clock = createClass({
+class Clock extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {time: moment()};
+  }
+
   componentWillUnmount() {
     clearInterval(this.interval);
-  },
+  }
+
   componentDidMount() {
-    this.interval = setInterval(this.forceUpdate.bind(this), 1000);
-  },
+    this.interval = setInterval(() => {
+      this.setState({ time: moment() })
+    }, 1000);
+  }
+
   circlePoint(angle, length) {
     const x = length*Math.sin(angle) + 250;
     const y = length*Math.cos(angle) + 250;
     return {x, y};
-  },
+  }
+
   handPath(amount, opts={}) {
     const increments = opts.increments || 60;
     const outerLength = opts.outerLength || 225;
@@ -27,7 +37,8 @@ const Clock = createClass({
     const outer = this.circlePoint(angle, outerLength);
     const inner = this.circlePoint(angle, innerLength);
     return `M 250 250 M ${inner.x} ${inner.y} L ${outer.x} ${outer.y}`;
-  },
+  }
+
   handArc(amount, radius, opts={}) {
     const increments = opts.increments || 60;
     const angle = -2*Math.PI*amount/increments - Math.PI;
@@ -35,7 +46,8 @@ const Clock = createClass({
     const largeArc = -angle > 2*Math.PI && 1 || 0
 
     return `M 250 ${250 - radius} A ${radius} ${radius} 0 ${largeArc} 1 ${x} ${y}`;
-  },
+  }
+
   tickPaths() {
     let paths = [];
     for(let i = 1; i <= 12; i++) {
@@ -48,15 +60,17 @@ const Clock = createClass({
       paths.push(this.handPath(i, opts));
     }
     return paths;
-  },
+  }
+
   render() {
-    const now = moment();
+    const state = this.state;
+    const now = state.time;
     const secondsPath = this.handPath(now.seconds(), {innerLength: 100})
     const minutesPath = this.handPath(now.minutes(), {outerLength: 200})
     const hoursPath = this.handPath(now.hours()*60 + now.minutes(), {outerLength: 150, increments: 720})
     const ticks = this.tickPaths();
     return(
-      <div style={styles}>
+      <div style={clockStyles}>
         <svg height="500" width="500">
           {ticks.map((tick) => {
             return(<path key={tick} d={tick} stroke="black" strokeWidth="2"></path>)
@@ -71,6 +85,6 @@ const Clock = createClass({
       </div>
     );
   }
-});
+}
 
 export default Clock;
